@@ -1,0 +1,7 @@
+access_key = "xxxxxxxxxxxxxxxxx"
+secret_key = "xxxxxxxxxxxxxxxxx"
+region = "ap-northeast-1"
+zone = "ap-northeast-1a"
+project_name = "Bastion-Server-for-Terraform"
+ecs_bastion_server_password = "!Bastion2019"
+ecs_production_server_password = "!Production2019"
