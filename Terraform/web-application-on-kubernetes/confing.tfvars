@@ -1,0 +1,10 @@
+access_key = "xxxxxxxxxxxxxxxx"
+secret_key = "xxxxxxxxxxxxxxxx"
+region = "ap-northeast-1"
+zone = "ap-northeast-1a"
+project_name = "Web-App-on-k8s-for-Terraform"
+k8s_password = "!Password2019"
+
+wordpress_version = "5.2.2"
+mysql_version = "5.7"
+mysql_password = "!Password2019"
