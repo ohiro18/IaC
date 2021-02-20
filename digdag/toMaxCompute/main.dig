@@ -1,0 +1,94 @@
+timezone: Asia/Tokyo
+
+_export:
+  workflow_name: "csv2postgres"
+  start_msg:     "digdag ${workflow_name} start"
+  end_msg:       "digdag ${workflow_name} finish"
+  error_msg:     "digdag ${workflow_name} error"
+  pg:
+    host: 127.0.0.1
+    port: 5432
+    user: postgres
+    #password_override: password
+    database: td_coding_challenge
+    strict_transaction: false
+
++start:
+  echo>: ${start_msg}
+
++guesstemp:
+  _parallel: true
+
+# Load data to tmp table
+  +guess_embulkCust1:
+    sh>: embulk guess seed_loadCustomers1.yml -o configloadcust1.yml
+
+  +guess_embulkCust2:
+    sh>: embulk guess seed_loadCustomers2.yml -o configloadcust2.yml
+
+  +guess_embulkPageView1:
+    sh>: embulk guess seed_loadPageViews1.yml -o configPageView1.yml
+
+  +guess_embulkPageView2:
+    sh>: embulk guess seed_loadPageViews2.yml -o configPageView2.yml
+
++loadtemp:
+  _parallel: true
+
+  +csv_to_dbCust1:
+    embulk>: configloadcust1.yml
+
+  +csv_to_dbCust2:
+    embulk>: configloadcust2.yml
+
+  +csv_to_dbpv1:
+    embulk>: configPageView1.yml
+
+  +csv_to_dbpv2:
+    embulk>: configPageView2.yml
+
+
+# Load data from tmp to prep table
++guessprep:
+  _parallel: true
+  +guess_prepembulk1:
+    sh>: embulk guess seed_prepCustomers.yml -o configprepCustomers.yml
+
+  +guess_prepembulk2:
+    sh>: embulk guess seed_prepPageViews.yml -o configprepPageViews.yml
+
++loadprep:
+  _parallel: true
+  
+  +tmp_to_prepdb1:
+    embulk>: configprepCustomers.yml
+
+  +tmp_to_prepdb2:
+    embulk>: configprepPageViews.yml
+
+# Run SQL queries in postgresql
+
++question1:
+  pg>: Question1.sql
+  preview: true
+  store_last_results: all
+
++question2-1:
+  pg>: Question2-1.sql
+  preview: true
+  store_last_results: all
+
++question2-2:
+  pg>: Question2-2.sql
+  preview: true
+  store_last_results: all
+
+## This is for _error confirmation. 
+##+fail:
+##  fail>: "fail!"
+
++end:
+  echo>: ${end_msg}
+
+_error:
+  echo>: ${error_msg}
