@@ -1,4 +1,4 @@
-# embulk-digdag
+# embulk-digdag-Hologres
 Use Embulk and Digdag to load CSV to Hologres. 
 
 1. JAVA 8 (set java path)
