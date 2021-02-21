@@ -1,0 +1,25 @@
+in:
+  type: file
+  path_prefix: "/home/linuxos/pageviews_2"
+  parser:
+    type: csv
+    columns:
+    - {name: user_id, type: string}
+    - {name: url, type: string}
+    - {name: user_agent, type: string}
+    - {name: timestamp, type: string, to_format: string}
+
+
+out:
+  type: postgresql
+  host: localhost
+  user: postgres
+  password: admin
+  database: td_coding_challenge
+  table: pageviews_tmp
+  mode: insert_direct
+  column_options:
+    user_id: {value_type: string}
+    url: {value_type: string}
+    user_agent: {value_type: string}
+    timestamp: {value_type: string, to_format: string}
