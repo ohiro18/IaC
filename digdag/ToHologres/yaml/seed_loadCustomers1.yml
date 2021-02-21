@@ -1,0 +1,11 @@
+in:
+  type: file
+  path_prefix: "/home/linuxos/customers_1"
+out:
+  type: postgresql
+  host: localhost
+  user: postgres
+  password: admin
+  database: td_coding_challenge
+  table: customers_tmp
+  mode: insert_direct
