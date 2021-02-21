@@ -1,0 +1,32 @@
+in:
+  type: postgresql
+  host: localhost
+  user: postgres
+  password: admin
+  database: td_coding_challenge
+  query:
+    SELECT 
+      user_id, url, user_agent, timestamp,
+      (CASE WHEN user_agent ~* 'Windows' THEN 'Windows'
+      WHEN user_agent ~* 'Macintosh' THEN 'Macintosh'
+      WHEN user_agent ~* 'Linux' THEN 'Linux'
+      ELSE 'Other' END) AS operating_system 
+    FROM 
+      pageviews_tmp
+
+out:
+  type: postgresql
+  host: localhost
+  user: postgres
+  password: admin
+  database: td_coding_challenge
+  table: pageviews
+  column_options:
+    user_id: {value_type: string}
+    url: {value_type: string}
+    user_agent: {value_type: string}
+    timestamp: {value_type: string}
+    operating_system:{value_type: string}
+  mode: insert_direct
+               
+  
