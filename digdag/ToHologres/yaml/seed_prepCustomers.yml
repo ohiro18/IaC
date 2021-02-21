@@ -1,0 +1,23 @@
+in:
+  type: postgresql
+  host: localhost
+  user: postgres
+  password: admin
+  database: td_coding_challenge
+  table: customers_tmp
+  select: "user_id, first_name, last_name, job_title"
+  where: "job_title !~* 'sale'"
+
+out:
+  type: postgresql
+  host: localhost
+  user: postgres
+  password: admin
+  database: td_coding_challenge
+  table: customers
+  mode: insert_direct
+  column_options:
+    user_id: {value_type: string}
+    first_name: {value_type: string}
+    last_name: {value_type: string}
+    job_title: {value_type: string}
