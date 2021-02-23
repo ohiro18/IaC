@@ -1,0 +1,29 @@
+in:
+  type: file
+  path_prefix: /data/test2.csv
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: ','
+    quote: '"'
+    escape: '"'
+    trim_if_not_quoted: false
+    skip_hander_lines: 1
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+    - {name: 'id', type: string}
+    - {name: 'testString', type: string}
+ 
+out:
+  type: postgresql
+  mode: truncate_insert
+  default_timezone: "Asia/Tokyo"
+  host: localhost
+  port: 5432
+  user: testuser
+  password: "password1234"
+  database: test_db
+  schema: test_schema
+  table: test_table
