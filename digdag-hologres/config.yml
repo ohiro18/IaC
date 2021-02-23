@@ -1,0 +1,29 @@
+in:
+  type: file
+  path_prefix: ./data/
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: ','
+    quote: '"'
+    escape: '"'
+    trim_if_not_quoted: false
+    skip_header_lines: 1
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+    - {name: yyyy/mm/dd, type: timestamp, format: '%Y/%m/%d'}
+    - {name: user, type: string}
+    - {name: item, type: string}
+    - {name: cost, type: long}
+out:
+  type: postgresql
+  default_timezone: Japan
+  host: localhost
+  user: postgres
+  password: postgres
+  database: postgres
+  table: sampledata
+  options: {loglevel: 2}
+  mode: insert_direct
