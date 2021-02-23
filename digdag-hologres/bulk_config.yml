@@ -1,0 +1,20 @@
+in:
+  type: file
+  path_prefix: /test3.csv
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: ','
+    quote: '"'
+    trim_if_not_quoted: false
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+    - {name: a, type: long}
+    - {name: b, type: string}
+out:
+   type: command
+   command: "pg_bulkload -i stdin -O tbl -o SKIP=1"
+   formatter:
+     type: csv
