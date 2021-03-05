@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package suggester.service;
+
+
+service ModelRequest {
+  rpc GetComment (GetCommentRequest) returns (GetCommentResponse) {}
+}
+
+message GetCommentRequest {
+  string pullRequestURL = 1;
+  string pullRequestPatchURL = 2;
+  string repoName = 3;
+}
+
+message GetCommentResponse {
+  string pullRequestURL = 1;
+  repeated FileNameCommitIDPosition fileNameCommitIDPositions = 2;
+  string message = 3;
+}
+
+message FileNameCommitIDPosition {
+  string fileName = 1;
+  string commitID = 2;
+  int32  position = 3;
+}
